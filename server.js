@@ -12,8 +12,8 @@ var path = require('path');
 
 var con = mysql.createConnection({
     host: 'localhost',
-    user: 'node',
-    password: 'dlsurainflow1920_1234',
+    user: 'root',
+    password: '',
     database: 'rainflow'
 });
 
