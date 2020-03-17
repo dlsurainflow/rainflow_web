@@ -110,9 +110,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" >
       <!-- Sidebar user panel (optional) -->
-	  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+	  <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
@@ -120,6 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a href="#" class="d-block">User</a>
         </div>
      </div>
+	 -->
 
 	
 
@@ -485,81 +486,38 @@ $("#myDiv").css("height", window_height - header_height);
           sidebar.toggle();
           sidebar.setContent("You clicked the map at " + e.latlng.toString());
         })
-
-        sidebar.on('show', function () {
-          console.log('Sidebar will be visible.');
-          
-        });
-
-        sidebar.on('shown', function () {
-          console.log('Sidebar is visible.');
-          
-        });
-
-        sidebar.on('hide', function () {
-            console.log('Sidebar will be hidden.');
-        });
-
-        sidebar.on('hidden', function () {
-            console.log('Sidebar is hidden.');
-        });
-
-        L.DomEvent.on(sidebar.getCloseButton(), 'click', function () {
-            console.log('Close button clicked.');
-        });
 	
  // ciLayer.addMarker(markerHome);
   //ciLayer.addMarker(markerSomewhere);
 	var LOCmarker;
-	var arr = [[]];
+	var arr = [];
 	var IDcheck = 0;
-	var x = 0; //polygon ID
-	var y = 0; // polygon latitude and longitude
+	var myStyle =
+		{
+			fillColor: '#1c9099',
+			weight: 3
+		};
+	
 
         {{#each data}}
 		
 			console.log("polyID = " + {{polyID}});
 			if(IDcheck == {{polyID}} - 1){
-			
+			var polygon = L.polygon(arr).setStyle(myStyle).addTo(map);
+			arr = [];
 			 console.log("NEW POLYGON ID DETECTED. polyID is " + {{polyID}}  + " ID is " + IDcheck);
 			 IDcheck++;
-			 arr[x][y] = {{latitude}};
-			 arr[x][y+1] = {{longitude}};
-			 console.log("array[" + x + "][" + y +"] is = " + arr[x][y]);
-			 console.log("array[" + x + "][" + (y+1) +"] is = " + arr[x][y+1]);
+			 arr.push([{{latitude}}, {{longitude}}]);
+			 
 		//	x++; //x will change if a new polygon ID is detected. polygon IDs are already assoted in MySQL
 			//y = 0;
 			} else{
-			
 			console.log("EXISTING POLYGON ID. polyID is " + {{polyID}}  + " ID is " + IDcheck);
-			arr[x][y] = {{latitude}};
-			arr[x][y+1] = {{longitude}};
-			console.log("array[" + x + "][" + y +"] is = " + arr[x][y]);
-			console.log("array[" + x + "][" + (y+1) +"] is = " + arr[x][y+1]);
+			arr.push([{{latitude}}, {{longitude}}]);
 			
 			}
 			
-		//   y++; // for every data, y is incremented
-			
-			//console.log("IDcheck now = " + IDcheck);
-			
-			//console.log("GOD BLESS");
-			
-			if({{numID}} == 1)
-			{
-				var num01 = {{latitude}};
-				var num02 = {{longitude}};
-			}
-			else if({{numID}} == 2)
-			{
-				var num03 = {{latitude}};
-				var num04 = {{longitude}};
-			}
-			else if({{numID}} == 3)
-			{
-				var num05 = {{latitude}};
-				var num06 = {{longitude}};
-			}
+			console.log("array[] is " + arr);
 			
 			
 
@@ -643,16 +601,16 @@ $("#myDiv").css("height", window_height - header_height);
 			sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
         }).addTo(map);
 			markerHome.bindPopup("<center><b>RAFT Here!</b><br>Decriptive Flood Level <br>Decriptive Rain Intensity</center>");
-		
+	
 		
 		
 		{{/each}}
 		
-		var polygon = L.polygon([
-			[num01, num02],
-			[num03, num04],
-			[num05, num06]
-]).addTo(map);
+		
+		var polygon = L.polygon(arr).setStyle(myStyle).addTo(map);
+		
+		
+		
 		
     </script>
 </body>
