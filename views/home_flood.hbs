@@ -32,7 +32,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" style="height:100vh">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -62,7 +62,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 	  <li>
-		<a href="RainFLOW.live/dashboard"   class="nav-link"> LOGIN</a>
+		<a href="http://RainFLOW.live/dashboard"   class="nav-link"> LOGIN</a>
 	  </i>
 	  </li>
     </ul>
@@ -149,7 +149,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
   </aside>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-	  <div id="map" style="width: 1280px%; height: 720px"></div>
+	  <div id="map" style="width: 1280px%; height: 100vh"></div>
   </div>
   <!-- /.content-wrapper -->
 
@@ -177,6 +177,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
 <script src="/js/leaflet.canvas-markers.js"></script>
 <script src="https://unpkg.com/leaflet-canvas-marker@0.2.0"></script>
 <script src="/src/L.Control.Sidebar.js"></script>
+<script src="/js/leaflet.geometryutil.js"></script>
 
 
  <script>
@@ -184,7 +185,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
       header_height = $(".main-header").height();
 $("#myDiv").css("height", window_height - header_height);
 
-  
+   $('[data-widget="pushmenu"]').PushMenu('collapse');
 
 
 
