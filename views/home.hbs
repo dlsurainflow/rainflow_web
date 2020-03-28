@@ -26,7 +26,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
  
   <link rel="stylesheet" href="/src/L.Control.Sidebar.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
-
+	<link rel="stylesheet" href="/css/Control.Geocoder.css" />
+	<link rel="stylesheet" href="/css/L.Control.Locate.min.css" />
 
 <style>
 html , body { height: 100%; overflow:hidden; padding:0; margin:0 }  
@@ -48,17 +49,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
 	  </li>
     </ul>
 	
-	<!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -102,51 +93,69 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
 	  <div>
       <nav class="mt-2" style="height:100vh">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-			
+
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-cube"></i>
               <p>
-                Node Filter
+                Node Source
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item" id = "1" onclick = "filtersel(this.id)">
+              <li class="nav-item">
                 <a href="/" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Nodes</p>
                 </a>
               </li>
-              <li class="nav-item" id = "2" onclick = "filtersel(this.id)">
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>RAFT Nodes</p>
+                  <p>RAFT Devices</p>
                 </a>
               </li>
-			  <li class="nav-item" id = "3" onclick = "filtersel(this.id)">
+			  <li class="nav-item">
                 <a href="/mobile" class="nav-link">
                   <i class="far fa-circle nav-icon" ></i>
-                  <p>Mobile Nodes</p>
+                  <p>Mobile Devices</p>
                 </a>
               </li>
-			  <li class="nav-item" id = "4" onclick = "filtersel(this.id)">
-                <a href="/flood" class="nav-link">
-                  <i class="far fa-circle nav-icon" ></i>
+			  </ul>
+			  </li>
+			  
+			  <p><p>
+			  
+			  <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-plus-square"></i>
+              <p>
+                Filters
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" id = "rainbutton" onclick = "rainfilter()">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Rain Intensity </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" id = "floodbutton" onclick = "floodfilter()">
+                  <i class="far fa-circle nav-icon"></i>
                   <p>Flood Level</p>
                 </a>
               </li>
-			  <li class="nav-item" id = "5" onclick = "filtersel(this.id)">
-                <a href="/rain" class="nav-link">
+			  <li class="nav-item">
+                <a href="#" class="nav-link" id = "polygonbutton" onclick = "polygonfilter()">
                   <i class="far fa-circle nav-icon" ></i>
-                  <p>Rain Intensity</p>
+                  <p>Area Highlights</p>
                 </a>
               </li>
-		
-            </ul>
-          </li>
+			  </ul>
+			  </li>
+			 
         </ul> 
       </nav>
       <!-- /.sidebar-menu -->
@@ -186,6 +195,8 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
 <script src="/src/L.Control.Sidebar.js"></script>
 <script src="/js/leaflet.geometryutil.js"></script>
 
+<script src="/js/Control.Geocoder.js"></script>
+<script src="/js/L.Control.Locate.js"></script>
 
  <script>
 	var window_height = $(window).height(),
@@ -196,7 +207,7 @@ $("#myDiv").css("height", window_height - header_height);
 
 
 
-  var map = L.map('map').setView([14.6047, 120.97833], 18);
+  var map = L.map('map').setView([14.6047, 120.97833], 10);
   var x = 0;
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -207,12 +218,24 @@ $("#myDiv").css("height", window_height - header_height);
 		id: 'mapbox/streets-v11'
 	}).addTo(map);
 
- // var ciLayer = L.canvasIconLayer({}).addTo(map);
-
-  //ciLayer.addOnClickListener(function (e) {
-    //sidebar.show();
-    //sidebar.setContent("<h2><b>RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>XXXX</b></p><p>RAFT shows Rain Intensity at <b>YYYY</b></p><p>Map location: <b>" + e.latlng.toString());
-  //});
+ var getLocation = L.control.locate({
+		position: 'topright',
+		initialZoomLevel: 13,
+		drawCircle: false,
+		strings: {
+        title: "Double click to go to your location"
+		}
+	}).addTo(map);
+	
+	
+	getLocation.start();
+  
+  
+	
+	
+	var geocoder = L.Control.geocoder({
+		position: 'topleft'
+	}).addTo(map);
 
 /////////////////////////// MARKER ICONS //////////////////////////////////////////
 	var greengreen = L.icon({
@@ -459,8 +482,7 @@ $("#myDiv").css("height", window_height - header_height);
 
 
         map.on('click', function (e) {
-          sidebar.toggle();
-          sidebar.setContent("You clicked the map at " + e.latlng.toString());
+          sidebar.hide();
         })
 	
 
@@ -476,13 +498,48 @@ $("#myDiv").css("height", window_height - header_height);
 	var sortedarray = [];
 	var finalarray = [];
 	var flag = 0;
+	var t = 0;
+	function rainfilter(){
+		if(document.getElementById("rainbutton").classList.contains('active')){
+			document.getElementById("rainbutton").classList.remove('active');
+			
+		} else{
+			document.getElementById("rainbutton").classList.add('active');
+			document.getElementById("floodbutton").classList.remove('active');
+			t = 1;
+			console.log("T is " + t);
+		}
+	}
+	
+	function floodfilter(){
+		if(document.getElementById("floodbutton").classList.contains('active')){
+			document.getElementById("floodbutton").classList.remove('active');
+		} else{
+			document.getElementById("floodbutton").classList.add('active');
+			document.getElementById("rainbutton").classList.remove('active');
+			t = 2;
+			console.log("T is " + t);
+		}
+	}
+	
+	function polygonfilter(){
+		if(document.getElementById("polygonbutton").classList.contains('active')){
+			document.getElementById("polygonbutton").classList.remove('active');
+		} else{
+			document.getElementById("polygonbutton").classList.add('active');
+			//t = 3;
+			//console.log("T is " + t);
+		}
+	}
+	
+	
 	
 
          {{#each data}}
 		 
 			
 		
-			console.log(" AAAA polyID = " + {{polyID}});
+			console.log("polyID = " + {{polyID}});
 			
 			if(IDcheck == {{polyID}} - 1){
 			
@@ -550,6 +607,67 @@ $("#myDiv").css("height", window_height - header_height);
 			var flood = {{waterdepth}};
 			var rain = {{rainintensity}};
 			
+			if(t == 1){ // t = 1 when rain filter is clicked on the menu, default value of t is 0
+		
+				if(flood < 20){
+				LOCmarker = greengreen;
+			
+					
+				}else if(flood >= 20 && flood < 40){
+					LOCmarker = limelime;
+					
+					
+				}else if (flood >= 40 && flood <80){
+					LOCmarker = yellowyellow;
+					
+					
+				}else if (flood >= 80 && flood < 120){
+					LOCmarker = orangeorange;
+					
+					
+				}else if(flood >= 120){
+					LOCmarker = redred;
+					
+				}
+				
+				var markerHome = L.marker([{{latitude}}, {{longitude}}], { icon: LOCmarker }).on('click', function () {
+					sidebar.show();
+					sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
+				}).addTo(map);
+					markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+			}
+			
+			else if(t == 2){ // t = 2 when flood filter is clicked on the menu
+				if(rain < 10){
+					LOCmarker = greengreen;
+				
+					
+				}else if(rain >= 10 && rain < 20){
+					LOCmarker = limelime;
+					
+					
+				}else if (rain >= 20 && rain <30){
+					LOCmarker = yellowyellow;
+					
+					
+				}else if (rain >= 30 && rain < 40){
+					LOCmarker = orangeorange;
+					
+					
+				}else if(rain >= 40){
+					LOCmarker = redred;
+					
+				}
+				
+				var markerHome = L.marker([{{latitude}}, {{longitude}}], { icon: LOCmarker }).on('click', function () {
+				sidebar.show();
+				sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
+				}).addTo(map);
+				markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+			
+			} 
+			
+			else if(t == 0){ //neither rain nor flood filters are on
 			
 				if(flood < 20){
 					if(rain < 10){
@@ -621,16 +739,29 @@ $("#myDiv").css("height", window_height - header_height);
 					}
 					
 				}
-			
-            var markerHome = L.marker([{{latitude}}, {{longitude}}], { icon: LOCmarker }).on('click', function () {
+				
+				var markerHome = L.marker([{{latitude}}, {{longitude}}], { icon: LOCmarker }).on('click', function () {
             sidebar.show();
 			sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
         }).addTo(map);
-			markerHome.bindPopup("<center><b>RAFT Here!</b><br>Decriptive Flood Level <br>Decriptive Rain Intensity</center>");
+			markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+			}
+			
+			
+			
+		
+				
+				
+			
+            
 	
 		
 		
 		{{/each}}
+		
+		if(t == 3){
+			console.log("BAKIT");
+			}
 		
 				var initiallength = arr.length;
 				var i;
