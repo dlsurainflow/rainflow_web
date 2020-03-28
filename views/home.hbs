@@ -33,6 +33,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 html , body { height: 100%; overflow:hidden; padding:0; margin:0 }  
 </style>
 
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+
+
+
+
+
+
 </head>
 <body class="hold-transition sidebar-mini" style="height:100vh">
 <div class="wrapper">
@@ -55,7 +63,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
     <ul class="navbar-nav ml-auto">
 	  <li>
 
-		<a href="http://RainFLOW.live/dashboard"   class="nav-link"> LOGIN</a>
+		<a href="http://dashboard.rainflow.live"   class="nav-link"> DASHBOARD</a>
 
 	  </i>
 	  </li>
@@ -103,14 +111,14 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+             <!-- <li class="nav-item">
                 <a href="/" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Nodes</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>RAFT Devices</p>
                 </a>
@@ -135,14 +143,20 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
               </p>
             </a>
             <ul class="nav nav-treeview">
+				<li class="nav-item">
+                <a href="/mobile" class="nav-link" id = "nofilter" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> No Filter </p>
+                </a>
+              </li>
               <li class="nav-item">
-                <a href="#" class="nav-link" id = "rainbutton" onclick = "rainfilter()">
+                <a href="/rain" class="nav-link" id = "rainbutton" >
                   <i class="far fa-circle nav-icon"></i>
                   <p> Rain Intensity </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link" id = "floodbutton" onclick = "floodfilter()">
+                <a href="/flood" class="nav-link" id = "floodbutton" >
                   <i class="far fa-circle nav-icon"></i>
                   <p>Flood Level</p>
                 </a>
@@ -176,8 +190,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
     </div>
 <!-- REQUIRED SCRIPTS -->
 
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+
 <!-- Bootstrap 4 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -217,6 +230,9 @@ $("#myDiv").css("height", window_height - header_height);
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		id: 'mapbox/streets-v11'
 	}).addTo(map);
+	
+	var polyLayer = L.layerGroup();
+	
 
  var getLocation = L.control.locate({
 		position: 'topright',
@@ -498,47 +514,34 @@ $("#myDiv").css("height", window_height - header_height);
 	var sortedarray = [];
 	var finalarray = [];
 	var flag = 0;
-	var t = 0;
-	function rainfilter(){
-		if(document.getElementById("rainbutton").classList.contains('active')){
-			document.getElementById("rainbutton").classList.remove('active');
-			
-		} else{
-			document.getElementById("rainbutton").classList.add('active');
-			document.getElementById("floodbutton").classList.remove('active');
-			t = 1;
-			console.log("T is " + t);
-		}
-	}
-	
-	function floodfilter(){
-		if(document.getElementById("floodbutton").classList.contains('active')){
-			document.getElementById("floodbutton").classList.remove('active');
-		} else{
-			document.getElementById("floodbutton").classList.add('active');
-			document.getElementById("rainbutton").classList.remove('active');
-			t = 2;
-			console.log("T is " + t);
-		}
-	}
+	var t = '{{filter}}';
+
 	
 	function polygonfilter(){
 		if(document.getElementById("polygonbutton").classList.contains('active')){
 			document.getElementById("polygonbutton").classList.remove('active');
+			if(t == "none"){
+				document.getElementById("nofilter").classList.add('active');
+			}
+			map.removeLayer(polyLayer);
 		} else{
 			document.getElementById("polygonbutton").classList.add('active');
-			//t = 3;
-			//console.log("T is " + t);
+			polyLayer.addTo(map);
+			document.getElementById("nofilter").classList.remove('active');
 		}
 	}
 	
+	if(t == "rain"){
+		document.getElementById("rainbutton").classList.add('active');
+	}
 	
-	
+	if(t == "flood"){
+		document.getElementById("floodbutton").classList.add('active');
+	}
 
          {{#each data}}
 		 
-			
-		
+	
 			console.log("polyID = " + {{polyID}});
 			
 			if(IDcheck == {{polyID}} - 1){
@@ -584,7 +587,7 @@ $("#myDiv").css("height", window_height - header_height);
 			
 			}
 
-			var polygon = L.polygon(finalarray).setStyle(myStyle).addTo(map);
+			var polygon = L.polygon(finalarray).setStyle(myStyle).addTo(polyLayer);
 			arr = [];
 			 console.log("NEW POLYGON ID DETECTED. polyID is " + {{polyID}}  + " ID is " + IDcheck);
 			 IDcheck++;
@@ -607,8 +610,9 @@ $("#myDiv").css("height", window_height - header_height);
 			var flood = {{waterdepth}};
 			var rain = {{rainintensity}};
 			
-			if(t == 1){ // t = 1 when rain filter is clicked on the menu, default value of t is 0
-		
+			if(t == "flood"){ // t = 1 when rain filter is clicked on the menu, default value of t is 0
+				document.getElementById("nofilter").classList.remove('active');
+				
 				if(flood < 20){
 				LOCmarker = greengreen;
 			
@@ -637,8 +641,10 @@ $("#myDiv").css("height", window_height - header_height);
 					markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
 			}
 			
-			else if(t == 2){ // t = 2 when flood filter is clicked on the menu
+			else if(t == "rain"){ // t = 2 when flood filter is clicked on the menu
+				document.getElementById("nofilter").classList.remove('active');
 				if(rain < 10){
+
 					LOCmarker = greengreen;
 				
 					
@@ -667,8 +673,8 @@ $("#myDiv").css("height", window_height - header_height);
 			
 			} 
 			
-			else if(t == 0){ //neither rain nor flood filters are on
-			
+			else if(t == "none"){ //neither rain nor flood filters are on
+				document.getElementById("nofilter").classList.add('active');
 				if(flood < 20){
 					if(rain < 10){
 						LOCmarker = greengreen;
@@ -801,7 +807,7 @@ $("#myDiv").css("height", window_height - header_height);
 						
 				}
 		
-		var polygon = L.polygon(finalarray).setStyle(myStyle).addTo(map);
+		var polygon = L.polygon(finalarray).setStyle(myStyle).addTo(polyLayer);
 		
 		
 		//var latilongi = L.latLng(arr[0][0], arr[0][1]);

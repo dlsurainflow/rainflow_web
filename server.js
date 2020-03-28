@@ -20,24 +20,12 @@ var con = mysql.createConnection({
 con.connect();
 app.get("/", (req,res)=>{ 
     var data;
+	var filter;
     con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
         data = result;
-		res.render("home.hbs", {data: result});
-		
-    });
-    
-    
-})
-
-app.get("/flood", (req,res)=>{ 
-    var data;
-    con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-        data = result;
-		res.render("home_flood.hbs", {data: result});
+		res.render("home.hbs", {data: result, filter:'none'});
 		
     });
     
@@ -46,11 +34,54 @@ app.get("/flood", (req,res)=>{
 
 app.get("/rain", (req,res)=>{ 
     var data;
+	var filter;
     con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
         data = result;
-		res.render("home_rain.hbs", {data: result});
+		res.render("home.hbs", {data: result, filter:'rain'});
+		
+    });
+    
+    
+})
+
+app.get("/flood", (req,res)=>{ 
+    var data;
+	var filter;
+    con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        data = result;
+		res.render("home.hbs", {data: result, filter:'flood'});
+		
+    });
+    
+    
+})
+
+app.get("/mobilerain", (req,res)=>{ 
+    var data;
+	var filter;
+    con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        data = result;
+		res.render("home_mobile.hbs", {data: result, filter:'rain'});
+		
+    });
+    
+    
+})
+
+app.get("/mobileflood", (req,res)=>{ 
+    var data;
+	var filter;
+    con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        data = result;
+		res.render("home_mobile.hbs", {data: result, filter:'flood'});
 		
     });
     
@@ -58,13 +89,15 @@ app.get("/rain", (req,res)=>{
 })
 
 
+
 app.get("/mobile", (req,res)=>{ 
     var data;
+	var filter;
     con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
         data = result;
-		res.render("home_mobile.hbs", {data: result});
+		res.render("home_mobile.hbs", {data: result, filter:'none'});
 		
     });
     
