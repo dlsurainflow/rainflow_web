@@ -217,7 +217,7 @@ body{position:relative;}
 <script src="/js/L.Control.Locate.js"></script>
 
  <script>
-	var window_height = $(window).height(),
+	var window_height = window.innerHeight || $(window).height();
       header_height = $(".main-header").height();
 $("#map").css("height", window_height - header_height );
 
