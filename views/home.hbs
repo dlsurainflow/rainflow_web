@@ -177,7 +177,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
     <!-- /.sidebar -->
   </aside>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" id = "myDiv">
 	  <div id="map" style="width: 1280px%; height: 100vh"></div>
   </div>
   <!-- /.content-wrapper -->
@@ -214,7 +214,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
  <script>
 	var window_height = $(window).height(),
       header_height = $(".main-header").height();
-$("#map").css("height", window_height - header_height);
+$("#myDiv").css("height", window_height - header_height);
 
    $('[data-widget="pushmenu"]').PushMenu('collapse');
 
