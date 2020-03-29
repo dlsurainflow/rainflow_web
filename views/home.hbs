@@ -30,18 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" href="/css/L.Control.Locate.min.css" />
 
 <style>
-body {margin:0;
-		height:calc(100% - 51px);
-		overflow:hidden; padding:0; margin:0}  
-
-html, #map{
-	height: 100%
-	overflow:hidden; padding:0; margin:0 ;
-}
-
-main-header {
-	margin-bottom: 0;
-}
+html , body { height: 100%; overflow:hidden; padding:0; margin:0 }  
 </style>
 
 <!-- jQuery -->
@@ -244,6 +233,9 @@ $("#myDiv").css("height", window_height - header_height);
 	
 	var polyLayer = L.layerGroup();
 	
+	if (L.Browser.mobile) {
+   map.removeControl(map.zoomControl);
+}
 
  var getLocation = L.control.locate({
 		position: 'topright',
