@@ -46,14 +46,14 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light hold-transition">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light hold-transition" style="height: 10vh">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" style ="margin-top: 17px"><i class="fas fa-bars"></i></a>
       </li>
 	  <li>
-	  <a href="#"><img src = "Logo.png" style ="width:150px;height:50px" alt = "RainFLOW Logo"></a>
+	  <a href="#"><img src = "Logo.png" style ="width:150px;height:50px; margin-top: 16px " alt = "RainFLOW Logo"></a>
 	  </li>
     </ul>
 	
@@ -63,7 +63,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
     <ul class="navbar-nav ml-auto">
 	  <li>
 
-		<a href="http://dashboard.rainflow.live"   class="nav-link"> DASHBOARD</a>
+		<a href="http://dashboard.rainflow.live"   class="nav-link" style ="margin-top: 17px"> DASHBOARD</a>
 
 	  </i>
 	  </li>
@@ -74,7 +74,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="starter.html" class="brand-link">
+    <a href="#" class="brand-link">
 	  <center>
       <span class="brand-text font-weight-bolder">RainFLOW</span>
 	  </center>
@@ -177,7 +177,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
     <!-- /.sidebar -->
   </aside>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" id = "myDiv">
 	  <div id="map" style="width: 1280px%; height: 100vh"></div>
   </div>
   <!-- /.content-wrapper -->
@@ -214,7 +214,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
  <script>
 	var window_height = $(window).height(),
       header_height = $(".main-header").height();
-$("#myDiv").css("height", window_height - header_height);
+$("#map").css("height", window_height - header_height );
 
    $('[data-widget="pushmenu"]').PushMenu('collapse');
 
@@ -233,9 +233,6 @@ $("#myDiv").css("height", window_height - header_height);
 	
 	var polyLayer = L.layerGroup();
 	
-	if (L.Browser.mobile) {
-   map.removeControl(map.zoomControl);
-}
 
  var getLocation = L.control.locate({
 		position: 'topright',
@@ -249,7 +246,9 @@ $("#myDiv").css("height", window_height - header_height);
 	
 	getLocation.start();
   
-   
+   if (L.Browser.mobile) {
+   map.removeControl(map.zoomControl);
+}
 	
 	
 	var geocoder = L.Control.geocoder({
