@@ -33,7 +33,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <style>
 html , body { height: 100%; overflow:hidden; padding:0; margin:0}  
 
-body{position:relative;}
 
 
 </style>
@@ -51,7 +50,7 @@ body{position:relative;}
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light hold-transition" style="height: 9.5vh">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light hold-transition" id = "topbar">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -183,7 +182,7 @@ body{position:relative;}
   </aside>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" id = "myDiv">
-	  <div id="map" style="width: 1280px%; height: 100vh"></div>
+	  <div id="map" class = "leaflet-container leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag" style="width: 1280px%; height: 100vh"></div>
   </div>
   <!-- /.content-wrapper -->
 
@@ -217,8 +216,8 @@ body{position:relative;}
 <script src="/js/L.Control.Locate.js"></script>
 
  <script>
-	var window_height = window.innerHeight || $(window).height();
-      header_height = $(".main-header").height();
+	var window_height = $(window).height();
+      header_height = $("#topbar").height();
 $("#map").css("height", window_height - header_height );
 
    $('[data-widget="pushmenu"]').PushMenu('collapse');
@@ -505,7 +504,10 @@ $("#map").css("height", window_height - header_height );
 
 
         map.on('click', function (e) {
-          sidebar.hide();
+          //sidebar.hide();
+		  sidebar.toggle();
+		  sidebar.setContent("You clicked the map at " + e.latlng.toString());
+		
         })
 	
 
@@ -523,6 +525,43 @@ $("#map").css("height", window_height - header_height );
 	var flag = 0;
 	var t = '{{filter}}';
 
+
+	///////////////////////////GENERATE RANDOM NUMBER OF NODES//////////////////////////////////
+	var polygonPH = L.polygon([
+    [7.385749, 117.054029],
+    [5.290382, 125.497166],
+    [8.429896, 127.211976],
+	[18.455067, 121.276093]
+]).addTo(map);
+	
+	// define the function
+
+    var bounds = polygonPH.getBounds(); 
+    var x_min  = bounds.getEast();
+    var x_max  = bounds.getWest();
+    var y_min  = bounds.getSouth();
+    var y_max  = bounds.getNorth();
+
+	var p;
+	
+	for(p = 0; p < 3000; p++){
+    var lat = y_min + (Math.random() * (y_max - y_min));
+    var lng = x_min + (Math.random() * (x_max - x_min));
+	
+	//nsole.log("NOTICE ME: lat = " + lat + " lang = " + lng);
+	
+	var randomMarker = L.marker([lat, lng], { icon: greengreen }).addTo(map);
+	}
+
+
+
+
+
+	
+	////////////////////////////////////////////////////////////
+	
+	
+	
 	
 	function polygonfilter(){
 		if(document.getElementById("polygonbutton").classList.contains('active')){

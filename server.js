@@ -12,12 +12,12 @@ var path = require('path');
 
 var con = mysql.createConnection({
     host: 'localhost',
-    user: 'node',
-    password: 'dlsurainflow1920_1234',
+    user: 'root', //node
+    password: '', //dlsurainflow1920_1234
     database: 'rainflow'
 });
 
-con.connect();
+
 app.get("/", (req,res)=>{ 
     var data;
 	var filter;
@@ -25,6 +25,7 @@ app.get("/", (req,res)=>{
         if (err) throw err;
         console.log(result);
         data = result;
+
 		res.render("home.hbs", {data: result, filter:'none'});
 		
     });
@@ -63,6 +64,13 @@ app.get("/flood", (req,res)=>{
 app.get("/mobilerain", (req,res)=>{ 
     var data;
 	var filter;
+	
+	con.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
+		if (err) throw err;
+		console.log("No. of records deleted- " + result.affectedRows);
+	});
+	
+	
     con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
@@ -77,6 +85,12 @@ app.get("/mobilerain", (req,res)=>{
 app.get("/mobileflood", (req,res)=>{ 
     var data;
 	var filter;
+	
+	con.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
+		if (err) throw err;
+		console.log("No. of records deleted- " + result.affectedRows);
+	});
+	
     con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
@@ -93,7 +107,13 @@ app.get("/mobileflood", (req,res)=>{
 app.get("/mobile", (req,res)=>{ 
     var data;
 	var filter;
-    con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
+    
+	con.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
+		if (err) throw err;
+		console.log("No. of records deleted- " + result.affectedRows);
+	});
+
+	con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
         data = result;

@@ -215,7 +215,7 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0 }
  <script>
 	var window_height = $(window).height(),
       header_height = $(".main-header").height();
-$("#myDiv").css("height", window_height - header_height);
+$("#map").css("height", window_height - header_height);
 
    $('[data-widget="pushmenu"]').PushMenu('collapse');
 
@@ -752,7 +752,7 @@ $("#myDiv").css("height", window_height - header_height);
             sidebar.show();
 			sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
         }).addTo(map);
-			markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+			markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Likes: "+{{likes}} + "<br>Rain Dislikes " + {{dislikes}} + "</center>");
 			}
 			
 			
