@@ -6,27 +6,33 @@ const url = require("url")
 //const publicPath = path.join(_dirname, '../views');
 
 const app = express()
-
-const mysql = require('mysql');
 var path = require('path');
 
-var con = mysql.createConnection({
-    host: 'localhost',
-    user: 'root', //node
-    password: '', //dlsurainflow1920_1234
-    database: 'rainflow'
-});
 
+const {Pool, Client } = require('pg')
+// pools will use environment variables
+
+
+const client = new Client({
+	user: 'tammy',
+	host:'RainFLOW.live',
+	database:'rainflow',
+	password:'Inmediasres8!',
+	port: 5432,
+	
+})
+
+client.connect()
 
 app.get("/", (req,res)=>{ 
     var data;
 	var filter;
-    con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
+    client.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result) {
         if (err) throw err;
-        console.log(result);
-        data = result;
+        console.log(result.rows);
+        data = result.rows;
 
-		res.render("home.hbs", {data: result, filter:'none'});
+		res.render("home.hbs", {data: result.rows, filter:'none'});
 		
     });
     
@@ -36,11 +42,11 @@ app.get("/", (req,res)=>{
 app.get("/rain", (req,res)=>{ 
     var data;
 	var filter;
-    con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
+    client.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result) {
         if (err) throw err;
-        console.log(result);
-        data = result;
-		res.render("home.hbs", {data: result, filter:'rain'});
+        console.log(result.rows);
+        data = result.rows;
+		res.render("home.hbs", {data: result.rows, filter:'rain'});
 		
     });
     
@@ -50,28 +56,28 @@ app.get("/rain", (req,res)=>{
 app.get("/flood", (req,res)=>{ 
     var data;
 	var filter;
-    con.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result, fields) {
+    client.query("SELECT * FROM common_raft ORDER BY polyID", function (err, result) {
         if (err) throw err;
-        console.log(result);
-        data = result;
-		res.render("home.hbs", {data: result, filter:'flood'});
+        console.log(result.rows);
+        data = result.rows;
+		res.render("home.hbs", {data: result.rows, filter:'flood'});
 		
     });
     
     
 })
-
+/*
 app.get("/mobilerain", (req,res)=>{ 
     var data;
 	var filter;
 	
-	con.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
+	client.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
 		if (err) throw err;
 		console.log("No. of records deleted- " + result.affectedRows);
 	});
 	
 	
-    con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
+    client.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result) {
         if (err) throw err;
         console.log(result);
         data = result;
@@ -86,12 +92,12 @@ app.get("/mobileflood", (req,res)=>{
     var data;
 	var filter;
 	
-	con.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
+	client.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
 		if (err) throw err;
 		console.log("No. of records deleted- " + result.affectedRows);
 	});
 	
-    con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
+    client.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
         data = result;
@@ -108,12 +114,12 @@ app.get("/mobile", (req,res)=>{
     var data;
 	var filter;
     
-	con.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
+	client.query("DELETE FROM common_mobile WHERE((dislikes/likes) > 1 AND (likes) > 1)", function(err, result){
 		if (err) throw err;
 		console.log("No. of records deleted- " + result.affectedRows);
 	});
 
-	con.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
+	client.query("SELECT * FROM common_mobile ORDER BY polyID", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
         data = result;
@@ -124,12 +130,11 @@ app.get("/mobile", (req,res)=>{
     
 })
 
-
+*/
 
 
 app.listen(30300, ()=>{
     console.log("server live at port 30300");
-	// console.log(result.latitude);
 })
 
 app.use(express.static(path.join(__dirname, "/public")));

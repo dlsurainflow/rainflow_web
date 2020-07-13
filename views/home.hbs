@@ -525,6 +525,7 @@ $("#map").css("height", window_height - header_height );
 	var flag = 0;
 	var t = '{{filter}}';
 
+/*
 
 	///////////////////////////GENERATE RANDOM NUMBER OF NODES//////////////////////////////////
 	var polygonPH = L.polygon([
@@ -554,7 +555,7 @@ $("#map").css("height", window_height - header_height );
 	}
 
 
-
+*/
 
 
 	
@@ -587,10 +588,10 @@ $("#map").css("height", window_height - header_height );
 
          {{#each data}}
 		 
-	
-			console.log("polyID = " + {{polyID}});
+	/*
+			console.log("polyID = " + {{polyid}});
 			
-			if(IDcheck == {{polyID}} - 1){
+			if(IDcheck == {{polyid}} - 1){
 			
 			if({{numID}} != 1){
 				var initiallength = arr.length;
@@ -635,7 +636,7 @@ $("#map").css("height", window_height - header_height );
 
 			var polygon = L.polygon(finalarray).setStyle(myStyle).addTo(polyLayer);
 			arr = [];
-			 console.log("NEW POLYGON ID DETECTED. polyID is " + {{polyID}}  + " ID is " + IDcheck);
+			 console.log("NEW POLYGON ID DETECTED. polyID is " + {{polyid}}  + " ID is " + IDcheck);
 			 IDcheck++;
 			var latilongi = L.latLng({{latitude}}, {{longitude}});
 			arr.push(latilongi);
@@ -643,7 +644,7 @@ $("#map").css("height", window_height - header_height );
 		//	x++; //x will change if a new polygon ID is detected. polygon IDs are already assoted in MySQL
 			//y = 0;
 			} else{
-			console.log("EXISTING POLYGON ID. polyID is " + {{polyID}}  + " ID is " + IDcheck);
+			console.log("EXISTING POLYGON ID. polyID is " + {{polyid}}  + " ID is " + IDcheck);
 			var latilongi = L.latLng({{latitude}}, {{longitude}});
 			arr.push(latilongi);
 			
@@ -651,10 +652,10 @@ $("#map").css("height", window_height - header_height );
 			
 			console.log("array[] is " + arr);
 			
-			
+			*/
 
-			var flood = {{waterdepth}};
-			var rain = {{rainintensity}};
+			var flood = {{flooddepth}};
+			var rain = {{rainfallrate}};
 			
 			if(t == "flood"){ // t = 1 when rain filter is clicked on the menu, default value of t is 0
 				document.getElementById("nofilter").classList.remove('active');
@@ -682,9 +683,9 @@ $("#map").css("height", window_height - header_height );
 				
 				var markerHome = L.marker([{{latitude}}, {{longitude}}], { icon: LOCmarker }).on('click', function () {
 					sidebar.show();
-					sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
+					sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{flooddepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainfallrate}} + "</b></p><p>");
 				}).addTo(map);
-					markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+					markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{flooddepth}} + "<br>Rain Intensity " + {{rainfallrate}} + "</center>");
 			}
 			
 			else if(t == "rain"){ // t = 2 when flood filter is clicked on the menu
@@ -715,7 +716,7 @@ $("#map").css("height", window_height - header_height );
 				sidebar.show();
 				sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
 				}).addTo(map);
-				markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+				markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainfallrate}} + "</center>");
 			
 			} 
 			
@@ -794,9 +795,9 @@ $("#map").css("height", window_height - header_height );
 				
 				var markerHome = L.marker([{{latitude}}, {{longitude}}], { icon: LOCmarker }).on('click', function () {
             sidebar.show();
-			sidebar.setContent("<h2><b>" + '{{API_Key}}' + " RAFT Node!</b></h2><p>RAFT shows Flood Level at <b>" + {{waterdepth}} + "</b></p><p>RAFT shows Rain Intensity at <b>" + {{rainintensity}} + "</b></p><p>");
+			sidebar.setContent("<h6><b>Device:  " + '{{deviceid}}' + "</h6></b><h7><br><p>Water depth: <b>" + {{flooddepth}} + "</b></p><p>Rainfall Rate: <b>" + {{rainfallrate}} + "</b></p><p>Rainfall Amount: <b>" + {{rainfallamount}} + "</b></p><p>Temperature: <b>" + {{temperature}} + "</b></p><p>Humidity: <b>" + {{humidity}} + "</b></p><p>Pressure: <b>" + {{pressure}} + "</b></p></h7>" );
         }).addTo(map);
-			markerHome.bindPopup("<center><b>" + '{{API_Key}}' + "</b><br>Flood Level: "+{{waterdepth}} + "<br>Rain Intensity " + {{rainintensity}} + "</center>");
+			markerHome.bindPopup("<center><b>" + '{{deviceid}}' + "</b><br>Flood Level: "+{{flooddepth}} + "<br>Rain Intensity " + {{rainfallrate}} + "</center>");
 			}
 			
 			
@@ -810,7 +811,7 @@ $("#map").css("height", window_height - header_height );
 		
 		
 		{{/each}}
-		
+		/*
 		if(t == 3){
 			console.log("BAKIT");
 			}
@@ -860,7 +861,7 @@ $("#map").css("height", window_height - header_height );
 		
 		//var test = L.GeometryUtil.closest(map, polygon, latilongi);
 		//console.log("Test: arr[0] is" + arr[0] + " nearest point is: " + test);
-		
+		*/
 		
     </script>
 </body>
