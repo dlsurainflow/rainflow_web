@@ -192,10 +192,10 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0}
 	<div id="sidebar" >
 		<a href="/" class="nav-link active">
               <p style="font-size:18px;">
-                Raft Devices
+                RAFT Devices
               </p>
         </a>
-		<a href="/mobile" class="nav-link active">
+		<a href="#" class="nav-link active">
               <p style="font-size:18px;">
                 Mobile Devices
               </p>
@@ -536,7 +536,7 @@ $("#map").css("height", window_height - header_height );
           //sidebar.hide();
 		  sidebar.show();
 		  sidebar.setContent("You clicked the map at " + e.latlng.toString() + " HEHE ");
-		  sidebar.setContent("<li class=\"nav-item\"> <a href=\"/\" class=\"nav-link\" id = \"nofilter\" > <i class=\"far fa-circle nav-icon\"></i> <p> No Filter </p> </a> </li>");
+		  sidebar.setContent("<a href=\"/\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Raft Devices </p> </a> <a href=\"/mobile\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Mobile Devices </p> </a> <a href=\"/\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> No Filter </p> </a> <a href=\"/rain\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Rain Intensity </p> </a> <a href=\"/flood\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Flood Level </p> </a> <a href=\"#\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Area Highlights </p> </a>");
         })
 	
 
