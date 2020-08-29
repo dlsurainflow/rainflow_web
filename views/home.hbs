@@ -46,7 +46,9 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0}
 
 
 </head>
-<body class="hold-transition sidebar-mini" style="height:100vh">
+<body style="height:100vh">
+
+<!-- class="hold-transition sidebar-mini"  -->
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -76,110 +78,34 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0}
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-	  <center>
-      <span class="brand-text font-weight-bolder">RainFLOW</span>
-	  </center>
-    </a>
+  <!-- <aside class="main-sidebar sidebar-dark-primary elevation-4"> -->
+    <!-- <!-- Brand Logo --> 
+    
 
 
-    <!-- Sidebar -->
-    <div class="sidebar" >
-      <!-- Sidebar user panel (optional) -->
-	  <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">User</a>
-        </div>
-     </div>
-	 -->
+    <!-- <!-- Sidebar --> 
+    <!-- <!--<div class="sidebar" > -->
+      <!-- <!-- Sidebar user panel (optional) -->
+	  <!-- <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex"> -->
+        <!-- <div class="image"> -->
+          <!-- <img src="/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+        <!-- </div> -->
+        <!-- <div class="info"> -->
+          <!-- <a href="#" class="d-block">User</a> -->
+        <!-- </div> -->
+     <!-- </div> -->
+	 <!-- --> 
 
 	
 
 
-      <!-- Sidebar Menu -->
-	  <div>
-      <nav class="mt-2" style="height:100vh">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-cube"></i>
-              <p>
-                Node Source
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-             <!-- <li class="nav-item">
-                <a href="/" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Nodes</p>
-                </a>
-              </li> -->
-              <li class="nav-item">
-                <a href="/" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>RAFT Devices</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="/mobile" class="nav-link">
-                  <i class="far fa-circle nav-icon" ></i>
-                  <p>Mobile Devices</p>
-                </a>
-              </li>
-			  </ul>
-			  </li>
-			  
-			  <p><p>
-			  
-			  <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
-              <p>
-                Filters
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-				<li class="nav-item">
-                <a href="/mobile" class="nav-link" id = "nofilter" >
-                  <i class="far fa-circle nav-icon"></i>
-                  <p> No Filter </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rain" class="nav-link" id = "rainbutton" >
-                  <i class="far fa-circle nav-icon"></i>
-                  <p> Rain Intensity </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/flood" class="nav-link" id = "floodbutton" >
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Flood Level</p>
-                </a>
-              </li>
-			  <li class="nav-item">
-                <a href="#" class="nav-link" id = "polygonbutton" onclick = "polygonfilter()">
-                  <i class="far fa-circle nav-icon" ></i>
-                  <p>Area Highlights</p>
-                </a>
-              </li>
-			  </ul>
-			  </li>
-			 
-        </ul> 
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+      <!-- <!-- Sidebar Menu --> 
+	  <!-- <div> -->
+      
+      <!-- <!-- /.sidebar-menu --> 
+    <!-- </div> -->
+    <!-- <!-- /.sidebar --> 
+  <!-- </aside> -->
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" id = "myDiv">
 	  <div id="map" class = "leaflet-container leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag" style="width: 1280px%; height: 100vh"></div>
@@ -190,7 +116,78 @@ html , body { height: 100%; overflow:hidden; padding:0; margin:0}
 <!-- ./wrapper -->
 	
 	<div id="sidebar" >
+	<a href="#">
+	  <center>
+      <p style="color:blue;font-size:18px;" class="brand-text font-weight-bolder">RainFLOW</p>
+	  </center>
+    </a>
+		<nav class="mt-2" style="height:100vh">
+        <ul class="nav nav-pills" data-accordion="true">
 
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-cube"></i>
+              <p style="color:black;font-size:18px;">
+                <b> Node Source </b>
+                <!-- <i class="right fas fa-angle-left"></i> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p style="color:black;font-size:18px;">RAFT Devices</p>
+                </a>
+              </li>
+			  <li class="nav-item">
+                <a href="/mobile" class="nav-link">
+                  <i class="far fa-circle nav-icon" ></i>
+                  <p style="color:black;font-size:18px;">Mobile Devices</p>
+                </a>
+              </li>
+			  </ul>
+			  </li>
+			  
+			  <p><p>
+			  
+			  <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-plus-square"></i>
+              <p style="color:black;font-size:18px;">
+                Filters
+                <!-- <i class="fas fa-angle-left right"></i> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+				<li class="nav-item">
+                <a href="/" class="nav-link" id = "nofilter" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p style="color:black;font-size:18px;"> No Filter </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/rain" class="nav-link" id = "rainbutton" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p style="color:black;font-size:18px;"> Rain Intensity </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/flood" class="nav-link" id = "floodbutton" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p style="color:black;font-size:18px;">Flood Level</p>
+                </a>
+              </li>
+			  <li class="nav-item">
+                <a href="#" class="nav-link" id = "polygonbutton" onclick = "polygonfilter()">
+                  <i class="far fa-circle nav-icon" ></i>
+                  <p style="color:black;font-size:18px;">Area Highlights</p>
+                </a>
+              </li>
+			  </ul>
+			  </li>
+			 
+        </ul> 
+      </nav>
     </div>
 <!-- REQUIRED SCRIPTS -->
 
@@ -491,13 +488,13 @@ $("#map").css("height", window_height - header_height );
 		
         var sidebar = L.control.sidebar('sidebar', {
             closeButton: true,
-            position: 'right'
+            position: 'left'
 			
         });
         map.addControl(sidebar);
 
         setTimeout(function () {
-            sidebar.hide();
+            sidebar.show();
         }, 500);
 
         
@@ -505,9 +502,9 @@ $("#map").css("height", window_height - header_height );
 
         map.on('click', function (e) {
           //sidebar.hide();
-		  sidebar.toggle();
-		  sidebar.setContent("You clicked the map at " + e.latlng.toString());
-		
+		  sidebar.show();
+		  sidebar.setContent("You clicked the map at " + e.latlng.toString() + " HEHE ");
+		  sidebar.setContent("<a href=\"/\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Raft Devices </p> </a> <a href=\"/mobile\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Mobile Devices </p> </a> <a href=\"/\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> No Filter </p> </a> <a href=\"/rain\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Rain Intensity </p> </a> <a href=\"/flood\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Flood Level </p> </a> <a href=\"#\" class=\"nav-link active\"> <p style=\"font-size:18px;\"> Area Highlights </p> </a>");
         })
 	
 
